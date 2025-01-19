@@ -11,7 +11,7 @@ int RecursivePowerInt(int base, int exponent);
 
 int main() {
     double base1 = 2.0;
-    int exp1 = 30; 
+    int exp1 = 100; 
 
     auto start = std::chrono::high_resolution_clock::now();
     double result1 = IterativePowerDouble(base1, exp1);
@@ -62,7 +62,7 @@ double IterativePowerDouble (double base, int exponent){
     
 
 
-    //std::cout << "Second time: " << nanoseconds.count() << " nanoseconds since epoch" << std::endl;
+    std::cout << "Second time: " << nanoseconds.count() << " nanoseconds since epoch" << std::endl;
 
     int nano = std::chrono::duration_cast<std::chrono::nanoseconds>(end1 - start1).count();
     // 1737069490
