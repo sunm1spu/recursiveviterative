@@ -1,3 +1,4 @@
+import java.io.PrintWriter;
 
 public class Main {
     /*
@@ -11,7 +12,13 @@ public class Main {
 
             return 1.0 / iterativePowerDouble(base, -exponent);
         }   
-        double result = recursivePowerDoubleHelper(base, exponent, base);
+        double result = 0;
+        try {
+            result = recursivePowerDoubleHelper(base, exponent, base);
+        } 
+        catch (Exception e) {
+            System.out.println("RPD ERROR: " + e);
+        }
 
         long end = System.nanoTime();
         long duration = end - start;
@@ -24,7 +31,14 @@ public class Main {
         
         
         if (exponent > 1) {
-            return recursivePowerDoubleHelper(base, exponent - 1, result * base);    
+            try {
+                return recursivePowerDoubleHelper(base, exponent - 1, result * base);        
+            } 
+            
+            catch (Exception e) {
+                System.out.println("ERROR IN RECURSION: " + e);
+            }
+            
         }
 
         return result;
@@ -35,7 +49,7 @@ public class Main {
         long start = System.nanoTime();
         
         double retValue = 1.0;
-         if (exponent < 0){
+        if (exponent < 0){
 
             return 1.0 / iterativePowerDouble(base, -exponent);
         }   
@@ -48,7 +62,7 @@ public class Main {
 
         long execTime = (end - start);
         
-        System.out.println("Iterative time " + execTime + "ns");
+        // System.out.println("Iterative time " + execTime + "ns");
         return retValue;
     }
 
@@ -105,26 +119,157 @@ public class Main {
         return retValue;
     }
 
+    public static void printToFile(String output) {
+        try (PrintWriter writer = new PrintWriter("tao.csv")){
+            
+            writer.println(output);
+        } catch (Exception error) {
+
+            System.err.println("ERROR PRINTING TO FILE: " + error.getMessage());
+        }
+    }
+
+
+    public static int findMaxN(int function, int baseInteger, double baseDouble) {
+        int i = 0;
+        int max_value = Integer.MAX_VALUE;
+        
+        switch (function) {
+            case 0:
+                try {
+                    // i < Integer.MAX_VALUE; i = max_value - (max_value - i) / 2)
+                    while (max_value != i) {
+                        System.out.println(i);
+                        double result = iterativePowerDouble(baseDouble, i);
+                        
+                        // If we overshoot max, go down
+                        if (result > Double.MAX_VALUE) {
+                            max_value = i;
+                            i = i / 2;
+                        }
+                        
+                        // If we undershoot max, go up
+                        else {
+                            i = max_value - (max_value - i) / 2;
+                        }
+
+                        System.out.println("Result: " + result);
+                    }
+                } 
+                
+                catch (Exception error) {
+                    System.out.println("IPD MAX N FOUND");
+                    return i;
+                }
+                return i;
+            case 1:
+                try {
+                        
+                    while (max_value != i) {
+                        System.out.println(i);
+                        double result = recursivePowerDouble(baseDouble, i);
+                        
+                        // If we overshoot max, go down
+                        if (result > Double.MAX_VALUE) {
+                            max_value = i;
+                            i = i / 2;
+                        }
+                        
+                        // If we undershoot max, go up
+                        else {
+                            i = max_value - (max_value - i) / 2;
+                        }
+
+                        System.out.println("Result: " + result);
+                    }
+                } 
+                
+                catch (Exception error) {
+                    System.out.println("RPD MAX N: " + i + ", " + error);
+                    return i;
+                }
+                return i;    
+
+            case 2:
+            try {
+                // i < Integer.MAX_VALUE; i = max_value - (max_value - i) / 2)
+                while (max_value != i) {
+                    System.out.println(i);
+                    double result = iterativePowerDouble(baseDouble, i);
+                    
+                    // If we overshoot max, go down
+                    if (result > Double.MAX_VALUE) {
+                        max_value = i;
+                        i = i / 2;
+                    }
+                    
+                    // If we undershoot max, go up
+                    else {
+                        i = max_value - (max_value - i) / 2;
+                    }
+
+                    System.out.println("Result: " + result);
+                }
+            } 
+            
+            catch (Exception error) {
+                System.out.println("IPD MAX N FOUND");
+                return i;
+            }
+            return i;
+                
+            case 3:
+                try {
+                        
+                    for (; i < Integer.MAX_VALUE; i = Integer.MAX_VALUE - (Integer.MAX_VALUE - i) / 2) {
+                    
+                        recursivePowerInt(baseInteger, i);
+                    }
+                } 
+                
+                catch (Exception error) {
+                    System.out.println("IPD MAX N: " + i + ", " + error);
+                    return i;
+                }
+                return i;
+
+            default:
+                throw new AssertionError();
+        }
+    }
 
     public static void main(String[] args) {
-        double base1 = 5.0;
-        int base2 = 5;
-
-        int exponent1 = 200;
-
+        double baseDouble = 2.718281828459045091;
+        int baseInteger = 1000003;
         
-        System.out.println("============== DOUBLE IMPLEMENTATION ==============");
-        double result = iterativePowerDouble(base1, exponent1);
-        double result2 = recursivePowerDouble(base1, exponent1);
+        int exponent1 = 2000;
 
-        System.out.println("Iterative result " + result);
-        System.out.println("Recursive result " + result2);
+        double resultIPD;
+        double resultRPD;
+        int resultIPI;
+        int resultRPI;
 
-        System.out.println("============== INTEGER IMPLEMENTATION ==============");
-        int result3 = iterativePowerInt(base2, exponent1);
-        int result4 = recursivePowerInt(base2, exponent1);
+        int maxN = 0;
+
+        for (int i = 0; i <= 0; i++) {
+            maxN = findMaxN(i, baseInteger, baseDouble);
+        }
+
+        int maxN1 = findMaxN(0, baseInteger, baseDouble);
+
+        int maxN2 = findMaxN(2, baseInteger, baseDouble);
         
-        System.out.println("Iterative result " + result3);
-        System.out.println("Recursive result " + result4);
+        System.out.println("Max N:" + maxN);
+        System.out.println("Max N1:" + maxN1);
+        System.out.println("Max N2:" + maxN2);
+        // System.out.println("============== DOUBLE IMPLEMENTATION ==============");
+        // resultIPD = iterativePowerDouble(baseDouble, exponent1);
+        // resultRPD = recursivePowerDouble(baseDouble, exponent1);
+
+        // System.out.println("============== INTEGER IMPLEMENTATION ==============");
+        // resultIPI = iterativePowerInt(baseInteger, exponent1);
+        // resultRPI = recursivePowerInt(baseInteger, exponent1);
+        
+        
     }
 }
