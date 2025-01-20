@@ -23,7 +23,7 @@ public class Main {
         long end = System.nanoTime();
         long duration = end - start;
 
-        System.out.println("Recursion time " + duration + "ns");
+        // System.out.println("Recursion time " + duration + "ns");
         return result;
     }
 
@@ -36,7 +36,7 @@ public class Main {
             } 
             
             catch (StackOverflowError e) {
-                System.out.println("ERROR IN RECURSION: " + e);
+                // System.out.println("ERROR IN RECURSION: " + e);
             }
             
         }
@@ -153,7 +153,7 @@ public class Main {
                             i = max_value - (max_value - i) / 2;
                         }
 
-                        System.out.println("Result: " + result);
+                        // System.out.println("Result: " + result);
                     }
                 } 
                 
@@ -161,7 +161,7 @@ public class Main {
                     System.out.println("IPD MAX N FOUND");
                     return i;
                 }
-                return i;
+                return i - 1;
             case 1:
                 try {
                         
@@ -181,7 +181,7 @@ public class Main {
                             i = max_value - (max_value - i) / 2;
                         }
 
-                        System.out.println("Result: " + result);
+                        // System.out.println("Result: " + result);
                     }
                 } 
                 
@@ -189,7 +189,7 @@ public class Main {
                     System.out.println("RPD MAX N: " + i + ", " + error);
                     return i;
                 }
-                return i;    
+                return i - 1;    
 
             case 2:
                 try {
@@ -250,16 +250,21 @@ public class Main {
 
         int maxN = 0;
 
-        
+        int[] maxArray = new int [4];
         for (int i = 0; i <= 1; i++) {
             maxN = findMaxN(i, baseInteger, baseDouble);
+            maxArray[i] = (int)maxN;
         }
 
+        System.out.println("MaxN 1: " + maxArray[0]);
+        System.out.println("MaxN 2: " + maxArray[1]);
+
+        double test2 = iterativePowerDouble(baseDouble, 709);
 
         // Max iterative double expt 709
-        double test2 = recursivePowerDouble(baseDouble, 50);
+        // double test2 = recursivePowerDouble(baseDouble, 50);
         System.out.println(test2);
-        System.out.println(Math.pow(baseDouble, 50));
+        // System.out.println(Math.pow(baseDouble, 50));
 
         // System.out.println("============== DOUBLE IMPLEMENTATION ==============");
         // resultIPD = iterativePowerDouble(baseDouble, exponent1);
