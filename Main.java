@@ -16,7 +16,7 @@ public class Main {
         try {
             result = recursivePowerDoubleHelper(base, exponent, base);
         } 
-        catch (Exception e) {
+        catch (StackOverflowError e) {
             System.out.println("RPD ERROR: " + e);
         }
 
@@ -35,7 +35,7 @@ public class Main {
                 return recursivePowerDoubleHelper(base, exponent - 1, result * base);        
             } 
             
-            catch (Exception e) {
+            catch (StackOverflowError e) {
                 System.out.println("ERROR IN RECURSION: " + e);
             }
             
@@ -167,6 +167,7 @@ public class Main {
                         
                     while (max_value != i) {
                         System.out.println(i);
+                        
                         double result = recursivePowerDouble(baseDouble, i);
                         
                         // If we overshoot max, go down
@@ -249,22 +250,17 @@ public class Main {
 
         int maxN = 0;
 
-        for (int i = 0; i <= 0; i++) {
+        
+        for (int i = 0; i <= 1; i++) {
             maxN = findMaxN(i, baseInteger, baseDouble);
         }
 
-        int maxN1 = findMaxN(0, baseInteger, baseDouble);
 
-        int maxN2 = findMaxN(2, baseInteger, baseDouble);
+        // Max iterative double expt 709
+        double test2 = recursivePowerDouble(baseDouble, 50);
+        System.out.println(test2);
+        System.out.println(Math.pow(baseDouble, 50));
 
-        int maxN3 = iterativePowerInt(baseInteger, Integer.MAX_VALUE);
-        
-        System.out.println("Max N:" + maxN);
-        System.out.println("Max N1:" + maxN1);
-        System.out.println("Max N2:" + maxN2);
-        System.out.println("Max N3:" + Integer.MAX_VALUE + " result " + maxN3);
-
-        System.out.println(baseInteger ^ Integer.MAX_VALUE);
         // System.out.println("============== DOUBLE IMPLEMENTATION ==============");
         // resultIPD = iterativePowerDouble(baseDouble, exponent1);
         // resultRPD = recursivePowerDouble(baseDouble, exponent1);
@@ -272,7 +268,5 @@ public class Main {
         // System.out.println("============== INTEGER IMPLEMENTATION ==============");
         // resultIPI = iterativePowerInt(baseInteger, exponent1);
         // resultRPI = recursivePowerInt(baseInteger, exponent1);
-        
-        
     }
 }
