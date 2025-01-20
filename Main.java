@@ -191,32 +191,30 @@ public class Main {
                 return i;    
 
             case 2:
-            try {
-                // i < Integer.MAX_VALUE; i = max_value - (max_value - i) / 2)
-                while (max_value != i) {
-                    System.out.println(i);
-                    double result = iterativePowerDouble(baseDouble, i);
-                    
-                    // If we overshoot max, go down
-                    if (result > Double.MAX_VALUE) {
-                        max_value = i;
-                        i = i / 2;
-                    }
-                    
-                    // If we undershoot max, go up
-                    else {
-                        i = max_value - (max_value - i) / 2;
-                    }
+                try {
+                    while (max_value != i) {
+                        System.out.println(i);
+                        int result = iterativePowerInt(baseInteger, i);
+                        
+                        // If we overshoot max, go down
+                        if (result > Integer.MAX_VALUE) {
+                            max_value = i;
+                            i = i / 2;
+                        }
+                        
+                        // If we undershoot max, go up
+                        else {
+                            i = max_value - (max_value - i) / 2;
+                        }
 
-                    System.out.println("Result: " + result);
+                    }
+                } 
+                
+                catch (Exception error) {
+                    System.out.println("IPD MAX N FOUND");
+                    return i;
                 }
-            } 
-            
-            catch (Exception error) {
-                System.out.println("IPD MAX N FOUND");
                 return i;
-            }
-            return i;
                 
             case 3:
                 try {
@@ -258,10 +256,15 @@ public class Main {
         int maxN1 = findMaxN(0, baseInteger, baseDouble);
 
         int maxN2 = findMaxN(2, baseInteger, baseDouble);
+
+        int maxN3 = iterativePowerInt(baseInteger, Integer.MAX_VALUE);
         
         System.out.println("Max N:" + maxN);
         System.out.println("Max N1:" + maxN1);
         System.out.println("Max N2:" + maxN2);
+        System.out.println("Max N3:" + Integer.MAX_VALUE + " result " + maxN3);
+
+        System.out.println(baseInteger ^ Integer.MAX_VALUE);
         // System.out.println("============== DOUBLE IMPLEMENTATION ==============");
         // resultIPD = iterativePowerDouble(baseDouble, exponent1);
         // resultRPD = recursivePowerDouble(baseDouble, exponent1);
